@@ -1,0 +1,271 @@
+{
+  "openapi" : "3.0.3",
+  "info" : {
+    "title" : "Product list API",
+    "description" : "This is a new API list",
+    "termsOfService" : "terms",
+    "contact" : {
+      "name" : "Abhishek Gupta",
+      "url" : "https://www.linkedin.com/in/abhishekgupta86",
+      "email" : "abhishekgupta86@gmail.com"
+    },
+    "license" : {
+      "name" : "MIT License",
+      "url" : "http://opensource.org/licenses/MIT"
+    },
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://virtserver.swaggerhub.com/AbhishekGSwagger/product-list_api.v3/1.0.0",
+    "description" : "SwaggerHub API Auto Mocking"
+  } ],
+  "paths" : {
+    "/product/{productid}" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "productid",
+          "in" : "path",
+          "description" : "this is the product id",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 12345
+          }
+        }, {
+          "name" : "security-customer header",
+          "in" : "header",
+          "description" : "security token of the user",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "this is a sample product details returned",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/product"
+                }
+              },
+              "application/xml" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/product"
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "API error occured",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "password" : [ "write" ]
+        } ]
+      }
+    },
+    "/product" : {
+      "get" : {
+        "parameters" : [ {
+          "name" : "pageNumber",
+          "in" : "query",
+          "description" : "this is the page number",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "this is the number of results returned",
+          "required" : false,
+          "style" : "form",
+          "explode" : true,
+          "schema" : {
+            "maximum" : 100,
+            "type" : "integer",
+            "example" : 30
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "this is a sample API",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/product"
+                  }
+                }
+              }
+            }
+          },
+          "500" : {
+            "description" : "API error occured",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "description" : "this is to submit the details of the new product to be created.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/product"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "the product has been created"
+          },
+          "500" : {
+            "description" : "API error occured",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_500"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "product" : {
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "example" : 400
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "lemon-water"
+          },
+          "description" : {
+            "type" : "string",
+            "example" : "this is a nice glass of lemon water"
+          }
+        }
+      },
+      "inline_response_500" : {
+        "type" : "object",
+        "properties" : {
+          "statuscode" : {
+            "type" : "string",
+            "example" : "500"
+          },
+          "message" : {
+            "type" : "string",
+            "example" : "there is some error in the api"
+          }
+        }
+      }
+    },
+    "responses" : {
+      "500apierror" : {
+        "description" : "API error occured",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/inline_response_500"
+            }
+          }
+        }
+      }
+    },
+    "parameters" : {
+      "ProductId" : {
+        "name" : "productid",
+        "in" : "path",
+        "description" : "this is the product id",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer",
+          "example" : 12345
+        }
+      },
+      "Security-customer-header" : {
+        "name" : "security-customer header",
+        "in" : "header",
+        "description" : "security token of the user",
+        "required" : true,
+        "style" : "simple",
+        "explode" : false,
+        "schema" : {
+          "type" : "integer"
+        }
+      },
+      "PageNumber" : {
+        "name" : "pageNumber",
+        "in" : "query",
+        "description" : "this is the page number",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "type" : "integer",
+          "example" : 1
+        }
+      },
+      "PageSize" : {
+        "name" : "pageSize",
+        "in" : "query",
+        "description" : "this is the number of results returned",
+        "required" : false,
+        "style" : "form",
+        "explode" : true,
+        "schema" : {
+          "maximum" : 100,
+          "type" : "integer",
+          "example" : 30
+        }
+      }
+    },
+    "securitySchemes" : {
+      "password" : {
+        "type" : "oauth2",
+        "flows" : {
+          "password" : {
+            "tokenUrl" : "http://example.com/oauth/token",
+            "scopes" : {
+              "write" : "allows modifying resources",
+              "read" : "allows reading resources"
+            }
+          }
+        }
+      }
+    }
+  }
+}
